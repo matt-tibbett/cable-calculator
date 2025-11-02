@@ -1,0 +1,171 @@
+:root {
+  --bg: #121212;
+  --text: #e0e0e0;
+  --accent: #00bcd4;
+  --card: #1e1e1e;
+  --ok: #00c853;
+  --bad: #ff5252;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background: var(--card);
+  padding: 1.6rem 2rem 2rem;
+  border-radius: 1rem;
+  width: 380px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+}
+
+h1 {
+  text-align: center;
+  color: var(--accent);
+  font-size: 1.2rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.1rem;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 0.9rem;
+  margin: 0.1rem 0 0.8rem;
+  color: #aaa;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.inline2 {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.inline2 .col {
+  width: 48%;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+select,
+input[type="number"],
+input[type="text"],
+input[type="range"] {
+  width: 100%;
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: #2a2a2a;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+input[type="text"] {
+  appearance: none;
+}
+
+input[type="text"]:disabled {
+  background: #3a3a3a;
+  color: #bbb;
+}
+
+input[type="range"] {
+  cursor: pointer;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.checkbox.small label {
+  font-size: 0.8rem;
+}
+
+/* --- Top Info Section --- */
+.top-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.circuit-type {
+  width: 50%;
+  border: 1px solid #333;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.5rem;
+}
+
+.circuit-type legend {
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
+.circuit-type label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 0.2rem;
+}
+
+.limits {
+  width: 50%;
+  font-size: 0.9rem;
+}
+
+.limits .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.2rem;
+}
+
+/* --- Output --- */
+.output {
+  background: #2a2a2a;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-family: monospace;
+}
+
+.output .header-row,
+.output .value-row {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.output .header-row span,
+.output .value-row span {
+  width: 33%;
+}
+
+.output .vd-row {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.ok {
+  color: var(--ok);
+  font-weight: bold;
+}
+
+.bad {
+  color: var(--bad);
+  font-weight: bold;
+}
