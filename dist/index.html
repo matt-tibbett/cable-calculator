@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cable Calculator</title>
+  <style>
+:root {
+  --bg: #121212;
+  --text: #e0e0e0;
+  --accent: #00bcd4;
+  --card: #1e1e1e;
+  --ok: #00c853;
+  --bad: #ff5252;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background: var(--card);
+  padding: 1.6rem 2rem 2rem;
+  border-radius: 1rem;
+  width: 380px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+}
+
+h1 {
+  text-align: center;
+  color: var(--accent);
+  font-size: 1.2rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.1rem;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 0.9rem;
+  margin: 0.1rem 0 0.8rem;
+  color: #aaa;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.inline2 {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.inline2 .col {
+  width: 48%;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+select,
+input[type="number"],
+input[type="text"],
+input[type="range"] {
+  width: 100%;
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: #2a2a2a;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+input[type="text"] {
+  appearance: none;
+}
+
+input[type="text"]:disabled {
+  background: #3a3a3a;
+  color: #bbb;
+}
+
+input[type="range"] {
+  cursor: pointer;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.checkbox.small label {
+  font-size: 0.8rem;
+}
+
+/* --- Top Info Section --- */
+.top-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.circuit-type {
+  width: 50%;
+  border: 1px solid #333;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.5rem;
+}
+
+.circuit-type legend {
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
+.circuit-type label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 0.2rem;
+}
+
+.limits {
+  width: 50%;
+  font-size: 0.9rem;
+}
+
+.limits .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.2rem;
+}
+
+/* --- Output --- */
+.output {
+  background: #2a2a2a;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-family: monospace;
+}
+
+.output .header-row,
+.output .value-row {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.output .header-row span,
+.output .value-row span {
+  width: 33%;
+}
+
+.output .vd-row {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.ok {
+  color: var(--ok);
+  font-weight: bold;
+}
+
+.bad {
+  color: var(--bad);
+  font-weight: bold;
+}
+
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Cable Calculator</h1>
+    <p class="subtitle">(230V Single Phase)</p>
+
+    <div class="input-group">
+      <label for="ze">Ze / Zdb (Ω):</label>
+      <input type="number" id="ze" min="0" step="0.01" value="0.35" />
+    </div>
+
+    <div class="input-group inline2">
+      <div class="col">
+        <label for="ocpd">OCPD (A)</label>
+        <select id="ocpd">
+          <option>6</option>
+          <option>15</option>
+          <option>20</option>
+          <option>25</option>
+          <option selected>32</option>
+          <option>40</option>
+          <option>45</option>
+          <option>50</option>
+          <option>63</option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="type">Type</label>
+        <select id="type">
+          <option>B</option>
+          <option>C</option>
+          <option>D</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="ib">Design Current (A):</label>
+      <input type="text" id="ib" value="32" />
+      <div class="checkbox small">
+        <input type="checkbox" id="use-ocpd" checked />
+        <label for="use-ocpd">Use OCPD</label>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="csa">Conductor CSA (mm²):</label>
+      <select id="csa">
+        <option>1</option>
+        <option>1.5</option>
+        <option>2.5</option>
+        <option>4</option>
+        <option selected>6</option>
+        <option>10</option>
+        <option>16</option>
+        <option>25</option>
+        <option>35</option>
+        <option>50</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label for="cpc">CPC CSA (mm²):</label>
+      <select id="cpc">
+        <option>1</option>
+        <option>1.5</option>
+        <option>2.5</option>
+        <option>4</option>
+        <option selected>6</option>
+        <option>10</option>
+        <option>16</option>
+        <option>25</option>
+        <option>35</option>
+        <option>50</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label for="length">Cable Length (m): <span id="length-value">50</span>m</label>
+      <input type="range" id="length" min="1" max="100" value="50" />
+    </div>
+
+    <div class="top-info">
+      <fieldset class="circuit-type">
+        <legend>Circuit Type</legend>
+        <label><input type="radio" name="circuit" value="lighting" checked /> Lighting</label>
+        <label><input type="radio" name="circuit" value="other" /> Other</label>
+      </fieldset>
+
+      <div class="limits">
+        <div class="row">
+          <span>Max Zs:</span><span id="max-zs">0.00</span> Ω
+        </div>
+        <div class="row">
+          <span>Max Vd:</span><span id="max-vd">0.00</span> V
+        </div>
+      </div>
+    </div>
+
+    <div class="output">
+      <div class="header-row">
+        <span>Ze</span>
+        <span>R1 + R2</span>
+        <span>Zs</span>
+      </div>
+      <div class="value-row">
+        <span id="ze-val">0.35</span>
+        <span id="r1r2">0.000</span>
+        <span id="zs">0.00</span>
+      </div>
+      <div class="vd-row">
+        <span class="label">Volt Drop:</span>
+        <span id="vdrop">0.00</span> V (<span id="vdrop-percent">0.00</span>%)
+      </div>
+    </div>
+  </div>
+
+  <script>
+const resistivity = {
+  1: 0.0181,
+  1.5: 0.0121,
+  2.5: 0.00741,
+  4: 0.00461,
+  6: 0.00308,
+  10: 0.00183,
+  16: 0.00115,
+  25: 0.000727,
+  35: 0.000524,
+  50: 0.000387,
+};
+
+const maxZsTable = {
+  B: { 6: 7.67, 15: 3.08, 20: 2.30, 25: 1.84, 32: 1.44, 40: 1.15, 45: 1.02, 50: 0.92, 63: 0.72 },
+  C: { 6: 3.83, 15: 1.54, 20: 1.15, 25: 0.92, 32: 0.72, 40: 0.58, 45: 0.51, 50: 0.46, 63: 0.36 },
+  D: { 6: 1.92, 15: 0.77, 20: 0.57, 25: 0.46, 32: 0.36, 40: 0.29, 45: 0.26, 50: 0.23, 63: 0.18 },
+};
+
+const ocpd = document.getElementById("ocpd");
+const type = document.getElementById("type");
+const csa = document.getElementById("csa");
+const cpc = document.getElementById("cpc");
+const length = document.getElementById("length");
+const lengthValue = document.getElementById("length-value");
+const r1r2Out = document.getElementById("r1r2");
+const vdropOut = document.getElementById("vdrop");
+const vdropPercentOut = document.getElementById("vdrop-percent");
+const zsOut = document.getElementById("zs");
+const maxZsOut = document.getElementById("max-zs");
+const maxVdOut = document.getElementById("max-vd");
+const ibInput = document.getElementById("ib");
+const useOcpd = document.getElementById("use-ocpd");
+const zeInput = document.getElementById("ze");
+const zeVal = document.getElementById("ze-val");
+const circuitRadios = document.querySelectorAll('input[name="circuit"]');
+
+function calculate() {
+  const L = parseFloat(length.value);
+  const ocpdVal = parseFloat(ocpd.value);
+  const I = useOcpd.checked ? ocpdVal : parseFloat(ibInput.value);
+  const r1 = resistivity[parseFloat(csa.value)];
+  const r2 = resistivity[parseFloat(cpc.value)];
+  const ze = parseFloat(zeInput.value);
+  const breakerType = type.value;
+
+  const r1r2 = (r1 + r2) * L;
+  const vdrop = I * r1r2;
+  const vdropPercent = (vdrop / 230) * 100;
+  const zs = ze + r1r2;
+  const maxZs = maxZsTable[breakerType][ocpdVal] || 0;
+
+  const circuitType = document.querySelector('input[name="circuit"]:checked').value;
+  const maxVd = circuitType === "lighting" ? (230 * 0.03) : (230 * 0.05);
+
+  // Update fields
+  zeVal.textContent = ze.toFixed(2);
+  r1r2Out.textContent = r1r2.toFixed(4);
+  zsOut.textContent = zs.toFixed(2);
+  vdropOut.textContent = vdrop.toFixed(2);
+  vdropPercentOut.textContent = vdropPercent.toFixed(2);
+  maxZsOut.textContent = maxZs.toFixed(2);
+  maxVdOut.textContent = maxVd.toFixed(1);
+  lengthValue.textContent = L;
+
+  // Volt drop color
+  const vdOk = vdrop <= maxVd;
+  vdropOut.className = vdropPercentOut.className = vdOk ? "ok" : "bad";
+
+  // Zs color
+  const zsOk = zs <= maxZs;
+  zsOut.className = zsOk ? "ok" : "bad";
+}
+
+useOcpd.addEventListener("change", () => {
+  const checked = useOcpd.checked;
+  ibInput.disabled = checked;
+  if (checked) {
+    ibInput.value = ocpd.value;
+  }
+  calculate();
+});
+
+ocpd.addEventListener("change", () => {
+  if (useOcpd.checked) ibInput.value = ocpd.value;
+  calculate();
+});
+
+[ocpd, type, csa, cpc, length, ibInput, zeInput].forEach(el => el.addEventListener("input", calculate));
+circuitRadios.forEach(r => r.addEventListener("change", calculate));
+
+ibInput.disabled = useOcpd.checked;
+if (useOcpd.checked) ibInput.value = ocpd.value;
+calculate();
+
+</script>
+</body>
+</html>
