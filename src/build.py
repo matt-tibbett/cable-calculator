@@ -3,9 +3,10 @@ from pathlib import Path
 import re
 
 def build():
+    # Base paths
     base_dir = Path(__file__).resolve().parent
-    dist_dir = base_dir.parent / "dist"
-    os.makedirs(dist_dir, exist_ok=True)
+    docs_dir = base_dir.parent / "docs"  # <-- output folder for GitHub Pages
+    os.makedirs(docs_dir, exist_ok=True)
 
     html_path = base_dir / "index.html"
     css_path = base_dir / "style.css"
@@ -32,7 +33,7 @@ def build():
     )
 
     # Write final single-file build
-    out_path = dist_dir / "index.html"
+    out_path = docs_dir / "index.html"
     out_path.write_text(html, encoding="utf-8")
     print(f"✅ Build complete! File written → {out_path}")
 
