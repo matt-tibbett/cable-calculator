@@ -307,91 +307,109 @@ class CableCalculator {
   }
 
   getTemplate(name) {
-    const radioName = `circuit-${name}`;
-    return `
-      <div class="input-group">
-        <label>Ze / Zdb (Ω):</label>
-        <input type="number" class="ze" min="0" step="0.01" value="0.35" />
-      </div>
+  const radioName = `circuit-${name}`;
+  return `
+    <div class="input-group">
+      <label>Ze / Zdb (Ω):</label>
+      <input type="number" class="ze" min="0" step="0.01" value="0.35" />
+    </div>
 
-      <div class="input-group inline2">
-        <div class="col">
-          <label>OCPD (A)</label>
-          <select class="ocpd">
-            ${[6,15,20,25,32,40,45,50,63].map(a => `<option>${a}</option>`).join("")}
-          </select>
-        </div>
-        <div class="col">
-          <label>Type</label>
-          <select class="type">
-            <option>B</option><option>C</option><option>D</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label>Design Current (A):</label>
-        <input type="text" class="ib" value="32" />
-        <div class="checkbox small">
-          <input type="checkbox" class="use-ocpd" checked />
-          <label>Use OCPD</label>
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label>Conductor CSA (mm²):</label>
-        <select class="csa">
-         ${Object.keys(resistivity)
-         .map(parseFloat)
-         .sort((a, b) => a - b)
-         .map(s => `<option>${s}</option>`)
-         .join("")}
+    <div class="input-group inline2">
+      <div class="col">
+        <label>OCPD (A)</label>
+        <select class="ocpd">
+          ${[6, 15, 20, 25, 32, 40, 45, 50, 63]
+            .map(a => `<option>${a}</option>`)
+            .join("")}
         </select>
       </div>
-
-      <div class="input-group">
-        <label>CPC CSA (mm²):</label>
-        <select class="cpc">
-         ${Object.keys(resistivity)
-         .map(parseFloat)
-         .sort((a, b) => a - b)
-         .map(s => `<option>${s}</option>`)
-         .join("")}
+      <div class="col">
+        <label>Type</label>
+        <select class="type">
+          <option>B</option>
+          <option>C</option>
+          <option>D</option>
         </select>
       </div>
+    </div>
 
-      <div class="input-group">
-        <label>Cable Length (m): <span class="length-value">50</span>m</label>
-        <input type="range" class="length" min="1" max="100" value="50" />
+    <div class="input-group">
+      <label>Design Current (A):</label>
+      <input type="text" class="ib" value="32" />
+      <div class="checkbox small">
+        <input type="checkbox" class="use-ocpd" checked />
+        <label>Use OCPD</label>
       </div>
+    </div>
 
-      <div class="top-info">
-        <fieldset class="circuit-type">
-          <legend>Circuit Type</legend>
-          <label><input type="radio" name="${radioName}" value="lighting" checked /> Lighting</label>
-          <label><input type="radio" name="${radioName}" value="other" /> Other</label>
-        </fieldset>
+    <div class="input-group">
+      <label>Conductor CSA (mm²):</label>
+      <select class="csa">
+        ${Object.keys(resistivity)
+          .map(parseFloat)
+          .sort((a, b) => a - b)
+          .map(s => `<option>${s}</option>`)
+          .join("")}
+      </select>
+    </div>
 
-        <div class="limits">
-          <div class="row"><span>Max Zs:</span><span class="max-zs">0.00</span> Ω</div>
-          <div class="row"><span>Max Vd:</span><span class="max-vd">0.00</span> V</div>
+    <div class="input-group">
+      <label>CPC CSA (mm²):</label>
+      <select class="cpc">
+        ${Object.keys(resistivity)
+          .map(parseFloat)
+          .sort((a, b) => a - b)
+          .map(s => `<option>${s}</option>`)
+          .join("")}
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label>Cable Length (m): <span class="length-value">50</span>m</label>
+      <input type="range" class="length" min="1" max="100" value="50" />
+    </div>
+
+    <!-- Top info: circuit type + limits -->
+    <div class="top-info">
+      <fieldset class="circuit-type">
+        <legend>Circuit Type</legend>
+        <label><input type="radio" name="${radioName}" value="lighting" checked /> Lighting</label>
+        <label><input type="radio" name="${radioName}" value="other" /> Other</label>
+      </fieldset>
+
+      <div class="limits">
+        <div class="row">
+          <span>Max Zs (100%):</span><span class="max-zs">0.00</span> Ω
+        </div>
+        <div class="row small">
+          <span>Design Zs (80%):</span><span class="design-zs">0.00</span> Ω
+        </div>
+        <div class="row">
+          <span>Max Vd:</span><span class="max-vd">0.00</span> V
         </div>
       </div>
+    </div> <!-- ✅ close .top-info -->
 
-      <div class="output">
-        <div class="header-row">
-          <span>Ze</span><span>R1 + R2</span><span>Zs</span>
-        </div>
-        <div class="value-row">
-          <span class="ze-val">0.35</span><span class="r1r2">0.000</span><span class="zs">0.00</span>
-        </div>
-        <div class="vd-row">
-          <span class="label">Volt Drop:</span>
-          <span class="vdrop">0.00</span> V (<span class="vdrop-percent">0.00</span>%)
-        </div>
+    <!-- Output results section -->
+    <div class="output">
+      <div class="header-row">
+        <span>Ze</span>
+        <span>R1 + R2</span>
+        <span>Zs</span>
       </div>
-    `;
-  }
+      <div class="value-row">
+        <span class="ze-val">0.35</span>
+        <span class="r1r2">0.000</span>
+        <span class="zs">0.00</span>
+      </div>
+      <div class="vd-row">
+        <span class="label">Volt Drop:</span>
+        <span class="vdrop">0.00</span> V (<span class="vdrop-percent">0.00</span>%)
+      </div>
+    </div>
+  `;
+}
+
 
   bindElements() {
     const q = s => this.root.querySelector(s);
@@ -439,38 +457,50 @@ class CableCalculator {
   }
 
   calculate() {
-    const i = this.inputs;
-    const L = parseFloat(i.length.value);
-    const ocpdVal = parseFloat(i.ocpd.value);
-    const I = i.useOcpd.checked ? ocpdVal : parseFloat(i.ib.value);
-    const r1 = resistivity[parseFloat(i.csa.value)];
-    const r2 = resistivity[parseFloat(i.cpc.value)];
-    const ze = parseFloat(i.ze.value);
-    const breakerType = i.type.value;
+  const i = this.inputs;
+  const L = parseFloat(i.length.value);
+  const ocpdVal = parseFloat(i.ocpd.value);
+  const I = i.useOcpd.checked ? ocpdVal : parseFloat(i.ib.value);
+  const r1 = resistivity[parseFloat(i.csa.value)];
+  const r2 = resistivity[parseFloat(i.cpc.value)];
+  const ze = parseFloat(i.ze.value);
+  const breakerType = i.type.value;
 
-    const r1r2 = (r1 + r2) * L;
-    const vdrop = I * r1r2;
-    const vdropPercent = (vdrop / 230) * 100;
-    const zs = ze + r1r2;
-    const maxZs = maxZsTable[breakerType][ocpdVal] || 0;
-    const circuitType = [...i.circuitRadios].find(r => r.checked).value;
-    const maxVd = circuitType === "lighting" ? 230 * 0.03 : 230 * 0.05;
+  const r1r2 = (r1 + r2) * L;
+  const vdrop = I * r1r2;
+  const vdropPercent = (vdrop / 230) * 100;
+  const zs = ze + r1r2;
 
-    const o = this.outputs;
-    o.zeVal.textContent = ze.toFixed(2);
-    o.r1r2.textContent = r1r2.toFixed(4);
-    o.zs.textContent = zs.toFixed(2);
-    o.vdrop.textContent = vdrop.toFixed(2);
-    o.vdropPercent.textContent = vdropPercent.toFixed(2);
-    o.maxZs.textContent = maxZs.toFixed(2);
-    o.maxVd.textContent = maxVd.toFixed(1);
-    i.lengthValue.textContent = L;
+  const maxZsRaw = maxZsTable[breakerType][ocpdVal] || 0;  // tabulated 100 %
+  const maxZsDesign = maxZsRaw * 0.8;                       // design 80 %
 
-    o.vdrop.className = o.vdropPercent.className = vdrop <= maxVd ? "ok" : "bad";
-    o.zs.className = zs <= maxZs ? "ok" : "bad";
+  const circuitType = [...i.circuitRadios].find(r => r.checked).value;
+  const maxVd = circuitType === "lighting" ? 230 * 0.03 : 230 * 0.05;
 
-    return { zs, vdrop, vdropPercent, r1r2 };
-  }
+  const o = this.outputs;
+  o.zeVal.textContent = ze.toFixed(2);
+  o.r1r2.textContent = r1r2.toFixed(4);
+  o.zs.textContent = zs.toFixed(2);
+  o.vdrop.textContent = vdrop.toFixed(2);
+  o.vdropPercent.textContent = vdropPercent.toFixed(2);
+  o.maxZs.textContent = maxZsRaw.toFixed(2);
+  o.maxVd.textContent = maxVd.toFixed(1);
+  i.lengthValue.textContent = L;
+
+  // --- 80 % design Zs display (if element exists) ---
+  if (!o.designZs) o.designZs = this.root.querySelector(".design-zs");
+  if (o.designZs) o.designZs.textContent = maxZsDesign.toFixed(2);
+
+  // --- Colour logic ---
+  const zsOk = zs <= maxZsDesign;
+  o.zs.className = zsOk ? "ok" : "bad";
+
+  const vdOk = vdrop <= maxVd;
+  o.vdrop.className = o.vdropPercent.className = vdOk ? "ok" : "bad";
+
+  return { zs, vdrop, vdropPercent, r1r2 };
+}
+
 }
 
 // --- Initialize calculators ---
