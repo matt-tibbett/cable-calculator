@@ -12,10 +12,41 @@ body {
   color: var(--text);
   font-family: "Segoe UI", sans-serif;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 2rem 0;
+}
+
+.page-title {
+  text-align: center;
+  color: var(--accent);
+  margin: 0.3rem 0 0;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 1.5rem;
+}
+
+.mode-select {
+  display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
 .container {
@@ -26,19 +57,12 @@ body {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
 }
 
-h1 {
+h2 {
   text-align: center;
   color: var(--accent);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-top: 0.3rem;
-  margin-bottom: 0.1rem;
-}
-
-.subtitle {
-  text-align: center;
-  font-size: 0.9rem;
-  margin: 0.1rem 0 0.8rem;
-  color: #aaa;
+  margin-bottom: 0.8rem;
 }
 
 .input-group {
@@ -73,11 +97,8 @@ input[type="range"] {
   font-size: 1rem;
 }
 
-input[type="text"] {
-  appearance: none;
-}
-
-input[type="text"]:disabled {
+input[type="text"]:disabled,
+input[type="number"]:disabled {
   background: #3a3a3a;
   color: #bbb;
 }
@@ -97,7 +118,7 @@ input[type="range"] {
   font-size: 0.8rem;
 }
 
-/* --- Top Info Section --- */
+/* Top Info Section */
 .top-info {
   display: flex;
   justify-content: space-between;
@@ -135,7 +156,7 @@ input[type="range"] {
   margin-bottom: 0.2rem;
 }
 
-/* --- Output --- */
+/* Output box */
 .output {
   background: #2a2a2a;
   padding: 1rem;
@@ -168,4 +189,39 @@ input[type="range"] {
 .bad {
   color: var(--bad);
   font-weight: bold;
+}
+
+/* Disabled state for greyed-out inputs and labels */
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Overall results */
+.overall-results {
+  margin-top: 2rem;
+  background: var(--card);
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  width: 800px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  display: none; /* hidden by default (single-circuit mode) */
+}
+
+.overall-results h2 {
+  text-align: center;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.overall-results .header-row,
+.overall-results .value-row {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.overall-results .header-row span,
+.overall-results .value-row span {
+  width: 33%;
 }

@@ -7,117 +7,41 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Cable Calculator</h1>
-    <p class="subtitle">(230V Single Phase)</p>
+  <h1 class="page-title">Cable Calculator</h1>
+  <p class="subtitle">(230V Single Phase)</p>
 
-    <div class="input-group">
-      <label for="ze">Ze / Zdb (Ω):</label>
-      <input type="number" id="ze" min="0" step="0.01" value="0.35" />
+  <!-- Mode toggle -->
+  <div class="mode-select">
+    <input type="checkbox" id="dual-mode" />
+    <label for="dual-mode">Enable Submain</label>
+  </div>
+
+  <div class="wrapper">
+    <!-- Submain -->
+    <div class="container" id="submain">
+      <h2>Submain</h2>
+      <div class="calc-body"></div>
     </div>
 
-    <div class="input-group inline2">
-      <div class="col">
-        <label for="ocpd">OCPD (A)</label>
-        <select id="ocpd">
-          <option>6</option>
-          <option>15</option>
-          <option>20</option>
-          <option>25</option>
-          <option selected>32</option>
-          <option>40</option>
-          <option>45</option>
-          <option>50</option>
-          <option>63</option>
-        </select>
-      </div>
-      <div class="col">
-        <label for="type">Type</label>
-        <select id="type">
-          <option>B</option>
-          <option>C</option>
-          <option>D</option>
-        </select>
-      </div>
+    <!-- Final Circuit -->
+    <div class="container" id="circuit">
+      <h2>Final Circuit</h2>
+      <div class="calc-body"></div>
     </div>
+  </div>
 
-    <div class="input-group">
-      <label for="ib">Design Current (A):</label>
-      <input type="text" id="ib" value="32" />
-      <div class="checkbox small">
-        <input type="checkbox" id="use-ocpd" checked />
-        <label for="use-ocpd">Use OCPD</label>
-      </div>
-    </div>
-
-    <div class="input-group">
-      <label for="csa">Conductor CSA (mm²):</label>
-      <select id="csa">
-        <option>1</option>
-        <option>1.5</option>
-        <option>2.5</option>
-        <option>4</option>
-        <option selected>6</option>
-        <option>10</option>
-        <option>16</option>
-        <option>25</option>
-        <option>35</option>
-        <option>50</option>
-      </select>
-    </div>
-
-    <div class="input-group">
-      <label for="cpc">CPC CSA (mm²):</label>
-      <select id="cpc">
-        <option>1</option>
-        <option>1.5</option>
-        <option>2.5</option>
-        <option>4</option>
-        <option selected>6</option>
-        <option>10</option>
-        <option>16</option>
-        <option>25</option>
-        <option>35</option>
-        <option>50</option>
-      </select>
-    </div>
-
-    <div class="input-group">
-      <label for="length">Cable Length (m): <span id="length-value">50</span>m</label>
-      <input type="range" id="length" min="1" max="100" value="50" />
-    </div>
-
-    <div class="top-info">
-      <fieldset class="circuit-type">
-        <legend>Circuit Type</legend>
-        <label><input type="radio" name="circuit" value="lighting" checked /> Lighting</label>
-        <label><input type="radio" name="circuit" value="other" /> Other</label>
-      </fieldset>
-
-      <div class="limits">
-        <div class="row">
-          <span>Max Zs:</span><span id="max-zs">0.00</span> Ω
-        </div>
-        <div class="row">
-          <span>Max Vd:</span><span id="max-vd">0.00</span> V
-        </div>
-      </div>
-    </div>
-
+  <div class="overall-results">
+    <h2>Overall Results</h2>
     <div class="output">
       <div class="header-row">
-        <span>Ze</span>
-        <span>R1 + R2</span>
-        <span>Zs</span>
+        <span>Total Zs (Ω)</span>
+        <span>Total Volt Drop (V)</span>
+        <span>Volt Drop (%)</span>
       </div>
       <div class="value-row">
-        <span id="ze-val">0.35</span>
-        <span id="r1r2">0.000</span>
-        <span id="zs">0.00</span>
-      </div>
-      <div class="vd-row">
-        <span class="label">Volt Drop:</span>
-        <span id="vdrop">0.00</span> V (<span id="vdrop-percent">0.00</span>%)
+        <span id="overall-zs">0.00</span>
+        <span id="overall-vd">0.00</span>
+        <span id="overall-vd-percent">0.00</span>
       </div>
     </div>
   </div>
