@@ -1,6 +1,5 @@
 # ---- Build output ----
-dist/
-*.html~        # temporary/backup HTML files
+docs/
 
 # ---- Python ----
 __pycache__/
