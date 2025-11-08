@@ -1,8 +1,13 @@
-[![Build and Deploy](https://github.com/matt-tibbett/cable-calculator/actions/workflows/deploy.yml/badge.svg)](https://github.com/matt-tibbett/cable-calculator/actions/workflows/deploy.yml)
-
 # Cable Calculator
 
 [![Build and Deploy](https://github.com/matt-tibbett/cable-calculator/actions/workflows/deploy.yml/badge.svg)](https://github.com/matt-tibbett/cable-calculator/actions/workflows/deploy.yml)
+![License](https://img.shields.io/github/license/matt-tibbett/cable-calculator)
+![Last Commit](https://img.shields.io/github/last-commit/matt-tibbett/cable-calculator)
+![GitHub release](https://img.shields.io/github/v/release/matt-tibbett/cable-calculator?include_prereleases)
+![GitHub stars](https://img.shields.io/github/stars/matt-tibbett/cable-calculator?style=social)
+![GitHub contributors](https://img.shields.io/github/contributors/matt-tibbett/cable-calculator)
+![Status](https://img.shields.io/badge/status-active-success)
+![Hosted on](https://img.shields.io/badge/hosted%20on-GitHub%20Pages-blue)
 
 A simple web-based tool for calculating **Zs** and **Voltage Drop (Vd)** for electrical circuits.
 Supports single circuits and submain/final-circuit combinations.
