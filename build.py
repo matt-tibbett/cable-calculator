@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import re
+import shutil
 
 def build():
     # Base paths
@@ -35,6 +36,15 @@ def build():
     # Write final single-file build
     out_path = docs_dir / "index.html"
     out_path.write_text(html, encoding="utf-8")
+
+
+# --- Copy favicon into docs (if it exists) ---
+    favicon = base_dir / "favicon.png"
+    if favicon.exists():
+        shutil.copy(favicon, docs_dir / "favicon.png")
+        print("🖼️  Copied favicon.png → docs/")
+    else:
+        print("⚠️  favicon.png not found — skipping.")
     print(f"✅ Build complete! File written → {out_path}")
 
 if __name__ == "__main__":
