@@ -226,33 +226,70 @@ class CableCalculator {
 }
 
 // --- Initialize calculators ---
+//const submain = new CableCalculator(document.getElementById("submain"), "sub", updateOverall);
+//const circuit = new CableCalculator(document.getElementById("circuit"), "circ", updateOverall);
+//const modeToggle = document.getElementById("dual-mode");
+
+// Create calculators
 const submain = new CableCalculator(document.getElementById("submain"), "sub", updateOverall);
 const circuit = new CableCalculator(document.getElementById("circuit"), "circ", updateOverall);
+const singleCircuit = new CableCalculator(document.getElementById("single-circuit"), "single", updateOverall);
 const modeToggle = document.getElementById("dual-mode");
+
 
 // Mode management
 modeToggle.addEventListener("change", () => setMode(modeToggle.checked));
 
 function setMode(dual) {
-  const submainDiv = document.getElementById("submain");
+  const submainDetails = document.getElementById("submain-details");
+  const circuitDetails = document.getElementById("circuit-details");
+  const singleCircuitDiv = document.getElementById("single-circuit");
   const overallDiv = document.querySelector(".overall-results");
 
-  submainDiv.style.display = dual ? "block" : "none";
-  overallDiv.style.display = dual ? "block" : "none";
+  if (dual) {
+    // --- SUBMAIN MODE ON ---
+    submainDetails.style.display = "block";
+    circuitDetails.style.display = "block";
+    singleCircuitDiv.style.display = "none";
+    overallDiv.style.display = "block";
+    overallDiv.classList.add("sticky");
 
-  // Circuit Ze field
-  circuit.inputs.ze.disabled = dual;
-  circuit.inputs.ze.classList.toggle("disabled", dual);
+    // Lock Circuit Ze (comes from submain)
+    circuit.inputs.ze.disabled = true;
+    circuit.inputs.ze.classList.add("disabled");
 
-  // Submain circuit type always "Other" and disabled
-  submain.inputs.circuitRadios.forEach(r => {
-    r.checked = r.value === "other";
-    r.disabled = dual;
-    r.closest("label").classList.toggle("disabled", dual);
-  });
+    // Submain circuit type fixed to "Other"
+    submain.inputs.circuitRadios.forEach(r => {
+      r.checked = r.value === "other";
+      r.disabled = true;
+      r.closest("label").classList.add("disabled");
+    });
+
+  } else {
+    // --- SINGLE-CIRCUIT MODE ---
+    submainDetails.style.display = "none";
+    circuitDetails.style.display = "none";
+    singleCircuitDiv.style.display = "block";
+    overallDiv.style.display = "none";
+    overallDiv.classList.remove("sticky");
+
+    // Re-enable Circuit Ze
+    circuit.inputs.ze.disabled = false;
+    circuit.inputs.ze.classList.remove("disabled");
+
+    // Re-enable Submain circuit type
+    submain.inputs.circuitRadios.forEach(r => {
+      r.disabled = false;
+      r.closest("label").classList.remove("disabled");
+    });
+  }
 
   updateOverall();
 }
+
+
+
+
 
 function updateOverall() {
   const dual = modeToggle.checked;

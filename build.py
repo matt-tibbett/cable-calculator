@@ -5,7 +5,7 @@ import re
 def build():
     # Base paths
     base_dir = Path(__file__).resolve().parent
-    docs_dir = base_dir.parent / "docs"  # <-- output folder for GitHub Pages
+    docs_dir = base_dir / "docs"  # <-- output folder for GitHub Pages
     os.makedirs(docs_dir, exist_ok=True)
 
     html_path = base_dir / "index.html"

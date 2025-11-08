@@ -7,6 +7,7 @@
   --bad: #ff5252;
 }
 
+/* --- Base layout --- */
 body {
   background-color: var(--bg);
   color: var(--text);
@@ -16,6 +17,7 @@ body {
   align-items: center;
   margin: 0;
   padding: 2rem 0;
+  min-height: 100vh;
 }
 
 .page-title {
@@ -31,6 +33,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
+/* --- Mode toggle --- */
 .mode-select {
   display: flex;
   justify-content: center;
@@ -41,22 +44,33 @@ body {
   color: var(--accent);
 }
 
+/* --- Wrapper for calculation cards --- */
 .wrapper {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 2rem;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 800px; /* same as overall-results */
+  margin: 0 auto;
 }
 
+/* --- Each calc container --- */
 .container {
   background: var(--card);
   padding: 1.6rem 2rem 2rem;
   border-radius: 1rem;
-  width: 380px;
+  width: 380px;           /* consistent width for all calc cards */
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+  transition: transform 0.2s ease;
 }
 
+.container:hover {
+  transform: translateY(-2px);
+}
+
+/* --- Headings --- */
 h2 {
   text-align: center;
   color: var(--accent);
@@ -65,6 +79,7 @@ h2 {
   margin-bottom: 0.8rem;
 }
 
+/* --- Input layout --- */
 .input-group {
   margin-bottom: 1rem;
 }
@@ -118,7 +133,7 @@ input[type="range"] {
   font-size: 0.8rem;
 }
 
-/* Top Info Section */
+/* --- Top info section (type + limits) --- */
 .top-info {
   display: flex;
   justify-content: space-between;
@@ -131,7 +146,7 @@ input[type="range"] {
   width: 50%;
   border: 1px solid #333;
   border-radius: 0.5rem;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem;
 }
 
 .circuit-type legend {
@@ -156,7 +171,7 @@ input[type="range"] {
   margin-bottom: 0.2rem;
 }
 
-/* Output box */
+/* --- Output box --- */
 .output {
   background: #2a2a2a;
   padding: 1rem;
@@ -191,21 +206,23 @@ input[type="range"] {
   font-weight: bold;
 }
 
-/* Disabled state for greyed-out inputs and labels */
+/* --- Disabled (greyed-out) state --- */
 .disabled {
   opacity: 0.5;
   pointer-events: none;
 }
 
-/* Overall results */
+/* --- Overall results panel --- */
 .overall-results {
   margin-top: 2rem;
   background: var(--card);
   padding: 1.5rem 2rem;
   border-radius: 1rem;
-  width: 800px;
+  width: 100%;
+  max-width: 800px; /* matches .wrapper width */
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-  display: none; /* hidden by default (single-circuit mode) */
+  box-sizing: border-box;
+  display: none; /* shown only in submain mode */
 }
 
 .overall-results h2 {
@@ -224,4 +241,51 @@ input[type="range"] {
 .overall-results .header-row span,
 .overall-results .value-row span {
   width: 33%;
+}
+
+/* --- Sticky results (mobile only, submain mode only) --- */
+@media (max-width: 768px) {
+  .overall-results.sticky {
+    position: sticky;
+    bottom: 0;
+    background: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(5px);
+    border-top: 2px solid var(--accent);
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    animation: slideUp 0.3s ease-out;
+    padding: 1rem;
+  }
+
+  .overall-results.sticky .output {
+    background: transparent;
+    padding: 0;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+}
+
+/* --- Responsive layout --- */
+@media (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+
+  .container {
+    width: 100%;
+    max-width: none;
+    border-radius: 0.5rem;
+    padding: 1.2rem;
+  }
+
+  .overall-results {
+    width: 100%;
+    max-width: none;
+    border-radius: 0.5rem;
+  }
 }

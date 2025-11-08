@@ -6,6 +6,7 @@
   <title>Cable Calculator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <h1 class="page-title">Cable Calculator</h1>
   <p class="subtitle">(230V Single Phase)</p>
@@ -16,20 +17,33 @@
     <label for="dual-mode">Enable Submain</label>
   </div>
 
+  <!-- Wrapper for calculation cards -->
   <div class="wrapper">
-    <!-- Submain -->
-    <div class="container" id="submain">
-      <h2>Submain</h2>
-      <div class="calc-body"></div>
-    </div>
 
-    <!-- Final Circuit -->
-    <div class="container" id="circuit">
-      <h2>Final Circuit</h2>
-      <div class="calc-body"></div>
-    </div>
+    <!-- Submain section -->
+    <details class="calc-section" id="submain-details" open>
+      <summary>Submain</summary>
+      <div class="container" id="submain">
+        <div class="calc-body"></div>
+      </div>
+    </details>
+
+    <!-- Final Circuit section -->
+    <details class="calc-section" id="circuit-details" open>
+      <summary>Final Circuit</summary>
+      <div class="container" id="circuit">
+        <div class="calc-body"></div>
+      </div>
+    </details>
+
   </div>
 
+  <!-- Single circuit (visible only when Submain disabled) -->
+  <div class="container" id="single-circuit">
+    <div class="calc-body"></div>
+  </div>
+
+  <!-- Overall results panel -->
   <div class="overall-results">
     <h2>Overall Results</h2>
     <div class="output">
